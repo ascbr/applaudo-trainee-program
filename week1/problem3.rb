@@ -1,4 +1,4 @@
-#------------leer arreglo--------------------------------------------
+#------------read array-------------------------------------------
 puts "***PROGRAM TO CALCULATE THE MEAN, MODE AND MEDIAN OF AN ARRAY***"
 puts "Enter the array"
 array = []
@@ -18,7 +18,7 @@ end until op == "q"
 puts "\narray : #{array.inspect}\n"
 
 
-#------------funciones--------------------------------------------
+#------------functions--------------------------------------------
 
 def mean(array_)
   sum = 0;
@@ -59,7 +59,7 @@ def median(array_)
   end
 end
 
-#------------calculos--------------------------------------------
+#------------calling functions--------------------------------------------
 if array.length != 0
   puts "\nmean: #{mean(array)}"
   puts
