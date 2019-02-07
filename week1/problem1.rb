@@ -1,6 +1,5 @@
 
 def alphabetichal_order(num)
-   str=""
    start_ = "a";
    end_ = "z" * num.to_i;
    if num.to_i <= 0 || num.to_i > 5
