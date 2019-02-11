@@ -12,9 +12,9 @@ end until n2.to_f != 0
 begin
   puts "Seleccionar opcion \n"+
     "1- Sum\n"+
-    "2- Rest\n"+
-    "3- Mult\n"+
-    "4- Div\n"
+    "2- Subtraction\n"+
+    "3- Multiplication\n"+
+    "4- Division\n"
 
   op = gets.chomp
 end until op.to_i != 0
