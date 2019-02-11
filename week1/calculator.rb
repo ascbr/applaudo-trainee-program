@@ -10,7 +10,7 @@ begin
   n2 = gets.chomp
 end until n2.to_f != 0
 begin
-  puts "Seleccionar opcion \n"+
+  puts "Select an option \n"+
     "1- Sum\n"+
     "2- Subtraction\n"+
     "3- Multiplication\n"+
@@ -29,5 +29,5 @@ case op.to_i
   when 4
     puts "result #{n1}/#{n2} = #{n1.to_f/n2.to_f}"
   else
-    puts 'opcion no valida'
+    puts 'invalid'
 end
