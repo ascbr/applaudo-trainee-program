@@ -1,64 +1,80 @@
-#file = File.new("events.csv", "r")
-lines = []
-
-#while line = file.gets
-#   l=line.split(',')
-#   puts "#{l[0]} - #{l[1]}"
-#end
-#file.close
-
-def check_date(str_date)
-  valid = ""
-  #check format
-  pattern = Regexp.new(
-                        '((0)[1-9]|[1-2][0-9]|(3)[0-1])/'+      #days
-                        '((0)[1-9]|(1)[0-2])/'+                 #months
-                        '((1)(9)([0-9]{2})|(2)(0)([0-9]{2}))'+  #years
-                        ' ([0-1][0-9]|(2)[0-4]):'+              #hours
-                        '((0)[1-9]|[1-5][0-9]):'+               #minuts
-                        '((0)[1-9]|[1-5][0-9])'                 #seconds
-                      )
-
-  valid = pattern.match(str_date).to_s
-  puts valid
-  if(valid != "")
-    date=valid.split(" ")
-    splited_date = date[0].split('/')
-    splited_time = date[1].split(':')
-
-    #check if bisiesto
-    if(splited_date[1].to_i == 2 && splited_date[0].to_i == 29)
-      if((splited_date[2].to_i % 400) == 0)
-        puts 'bisiesto'
-      elsif ((splited_date[2].to_i % 4) == 0 && (splited_date[2].to_i % 100) != 0)
-        puts 'bisiesto'
-      else
-        puts 'invalid date'
-      end
-
-    end
-    #check if 31 days months
-    if(splited_date[0].to_i == 31 && [1, 3, 5, 7, 8, 10, 12].include?(splited_date[1].to_i))
-      puts 'valid'
-    else
-      puts 'invalid'
-    end
-
-  else
-    puts "invalid format"
-  end
-end
-
-check_date "31/02/2010 04:12:50"
-
+require 'time'
+require 'date'
 
 class EventStr
   attr_accessor :title, :date, :n_line, :valid
 
-  def initialize (title, date, n_line)
+  def initialize(title, date, n_line, valid)
     @title = title
     @date = date
     @n_line = n_line
+    @valid = valid
   end
-
+  def to_s
+    n_line.to_s + "," + title.to_s + "," + date.strftime('%d/%m/%Y %H:%M:%S %z') + "," + valid.to_s
+  end
 end
+
+class String
+
+    def red; colorize(self, "\e[1m\e[31m"); end
+    def green; colorize(self, "\e[1m\e[32m"); end
+    def dark_green; colorize(self, "\e[32m"); end
+    def yellow; colorize(self, "\e[1m\e[33m"); end
+    def blue; colorize(self, "\e[1m\e[34m"); end
+    def dark_blue; colorize(self, "\e[34m"); end
+    def pur; colorize(self, "\e[1m\e[35m"); end
+    def colorize(text, color_code)  "#{color_code}#{text}\e[0m" end
+end
+
+
+#read file
+line= []
+valid_events_array = []
+invalid_events_array = []
+num_line = 0
+
+begin
+file = File.open("events.csv","r") do |f|
+  while line = f.gets
+    num_line = num_line +1
+    begin
+      l=line.split(',')
+      #check date format
+      d  =  DateTime.strptime(l[1].slice(0..l[1].length-2)+" -06",'%d/%m/%Y %H:%M:%S %z')
+      #change to EST, (UTC-5)
+      d = d.to_time.getlocal("-05:00")
+      event = EventStr.new(l[0], d , num_line, true)
+      valid_events_array << event # add to valid array
+    rescue  => e
+      puts "Error, invalid date format at line #{num_line}"
+      event = EventStr.new(l[0], l[1] , num_line, false)
+      invalid_events_array << event #add to invalid array
+    end
+  end
+end
+rescue => e
+  puts "Error, #{e.message}"
+end
+
+#write valid dates to file
+begin
+  valids = File.open("valids.csv", "w")
+  valid_events_array.sort_by{|e|  e.date }.each do |event|
+    valids.puts "#{event.date.strftime("%d/%m/%Y %H:%M:%S %z")}"
+  end
+rescue => e
+  puts "Error, #{e.message}"
+end
+
+#write invalid
+begin
+  invalids = File.open("invalids.csv", "w")
+  invalid_events_array.each do |event|
+    invalids.puts "#{event.n_line},#{event.title},#{event.date}"
+  end
+rescue => e
+  puts "Error, #{e.message}"
+end
+
+#graphic
