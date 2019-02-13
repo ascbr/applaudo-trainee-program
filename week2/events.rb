@@ -1,6 +1,7 @@
 require 'time'
 require 'date'
 
+#class for events
 class EventStr
   attr_accessor :title, :date, :n_line, :valid
 
@@ -15,8 +16,8 @@ class EventStr
   end
 end
 
+#class just for text color in console
 class String
-
     def red; colorize(self, "\e[1m\e[31m"); end
     def green; colorize(self, "\e[1m\e[32m"); end
     def dark_green; colorize(self, "\e[32m"); end
@@ -63,6 +64,25 @@ begin
   valid_events_array.sort_by{|e|  e.date }.each do |event|
     valids.puts "#{event.date.strftime("%d/%m/%Y %H:%M:%S %z")}"
   end
+  valids.puts "\nGraphic:"
+  valids.puts "╔#{("═"*(valid_events_array.length + 31))}╗"
+  valids.puts
+  valids.puts " valids:      #{('▒'*valid_events_array.length)} <#{valid_events_array.length}>"
+  valids.puts
+  valids.puts " invalids:    #{('░'*invalid_events_array.length)} <#{invalid_events_array.length}>"
+  valids.puts "#{" "*14}#{"-"*(valid_events_array.length + 10)}"
+  index = 0
+  str_index =" "*14
+  (0..(valid_events_array.length + 10)).each do |i|
+    if (index == i)
+      str_index += (i.to_s+"#{" "*8}")
+      index+= 10
+    end
+  end
+
+  valids.puts str_index
+  valids.puts "╚#{("═"*(valid_events_array.length + 31))}╝"
+
 rescue => e
   puts "Error, #{e.message}"
 end
@@ -78,3 +98,21 @@ rescue => e
 end
 
 #graphic
+puts "\nGraphic:"
+puts "╔#{("═"*(valid_events_array.length + 31))}╗"
+puts
+puts " valids:      #{('█'*valid_events_array.length).dark_blue} <#{valid_events_array.length}>"
+puts
+puts " invalids:    #{('█'*invalid_events_array.length).red} <#{invalid_events_array.length}>"
+puts "#{" "*14}#{"-"*(valid_events_array.length + 10)}"
+index = 0
+str_index =" "*14
+(0..(valid_events_array.length + 10)).each do |i|
+  if (index == i)
+    str_index += (i.to_s+"#{" "*8}")
+    index+= 10
+  end
+end
+
+puts str_index
+puts "╚#{("═"*(valid_events_array.length + 31))}╝"
