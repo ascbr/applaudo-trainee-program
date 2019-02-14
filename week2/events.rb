@@ -28,6 +28,65 @@ class String
     def colorize(text, color_code)  "#{color_code}#{text}\e[0m" end
 end
 
+#graphic function
+def graphic_console_txt (q1,q2,cat1,cat2,op_print,txt_file)
+  total = q1 + q2
+  pv = (q1/total.to_f)*100
+  pi = (q2/total.to_f)*100
+
+  str_sc = "#{" "*8}"
+
+  index = 0
+  (0..100).to_a.each do |i|
+    if (index == i)
+      str_sc += (i.to_s+"   ")
+      index +=10
+    end
+  end
+
+  if(op_print == true)  #console
+    puts "\nGraphic:"
+    puts "╔#{"═"*75}╗"
+    puts
+    puts "#{" "*8}#{"▒".dark_blue*(0.5*pv).to_i} <#{q1}>"
+    puts "#{" "*8}#{"▒".dark_blue*(0.5*pv).to_i} <#{pv}%>"
+    puts
+    puts "#{" "*8}#{"▒".red*(0.5*pi).to_i} <#{q2}>"
+    puts "#{" "*8}#{"▒".red*(0.5*pi).to_i} <#{pi}%>"
+    puts
+    puts "#{" "*8}├────#{"┼────"*9}┤"
+    puts str_sc +"(%)"
+    puts
+    puts "#{" "*8}#{"▒".dark_blue*1} #{cat1}"
+    puts
+    puts "#{" "*8}#{"▒".red*1} #{cat2}"
+    puts "╚#{"═"*75}╝"
+    puts
+
+
+  elsif(op_print == false)
+    puts "\n printing graphic to file"            #txt
+    txt_file.puts "\nGraphic:"
+    txt_file.puts "╔#{"═"*75}╗"
+    txt_file.puts
+    txt_file.puts "#{" "*8}#{"▓"*(0.5*pv).to_i} <#{q1}>"
+    txt_file.puts "#{" "*8}#{"▓"*(0.5*pv).to_i} <#{pv}%>"
+    txt_file.puts
+    txt_file.puts "#{" "*8}#{"░"*(0.5*pi).to_i} <#{q2}>"
+    txt_file.puts "#{" "*8}#{"░"*(0.5*pi).to_i} <#{pi}%>"
+    txt_file.puts
+    txt_file.puts "#{" "*8}├────#{"┼────"*9}┤"
+    txt_file.puts str_sc +"(%)"
+    txt_file.puts
+    txt_file.puts "#{" "*8}#{"▓"*1} #{cat1}"
+    txt_file.puts
+    txt_file.puts "#{" "*8}#{"░"*1} #{cat2}"
+    txt_file.puts "╚#{"═"*75}╝"
+    txt_file.puts
+  end
+end
+
+
 
 #read file
 line= []
@@ -64,25 +123,15 @@ begin
   valid_events_array.sort_by{|e|  e.date }.each do |event|
     valids.puts "#{event.date.strftime("%d/%m/%Y %H:%M:%S %z")}"
   end
-  valids.puts "\nGraphic:"
-  valids.puts "╔#{("═"*(valid_events_array.length + 31))}╗"
-  valids.puts
-  valids.puts " valids:      #{('▒'*valid_events_array.length)} <#{valid_events_array.length}>"
-  valids.puts
-  valids.puts " invalids:    #{('░'*invalid_events_array.length)} <#{invalid_events_array.length}>"
-  valids.puts "#{" "*14}#{"-"*(valid_events_array.length + 10)}"
-  index = 0
-  str_index =" "*14
-  (0..(valid_events_array.length + 10)).each do |i|
-    if (index == i)
-      str_index += (i.to_s+"#{" "*8}")
-      index+= 10
-    end
-  end
-
-  valids.puts str_index
-  valids.puts "╚#{("═"*(valid_events_array.length + 31))}╝"
-
+  #txt graphic
+  graphic_console_txt(
+                        valid_events_array.length,
+                        invalid_events_array.length,
+                        "valids",
+                        "invalids",
+                        false,
+                        valids
+                      )
 rescue => e
   puts "Error, #{e.message}"
 end
@@ -91,28 +140,18 @@ end
 begin
   invalids = File.open("invalids.csv", "w")
   invalid_events_array.each do |event|
-    invalids.puts "#{event.n_line},#{event.title},#{event.date}" #line number,event title,date
+    invalids.puts "#{event.n_line},#{event.title},#{event.date}" #line number,
   end
 rescue => e
   puts "Error, #{e.message}"
 end
 
-#graphic
-puts "\nGraphic:"
-puts "╔#{("═"*(valid_events_array.length + 31))}╗"
-puts
-puts " valids:      #{('█'*valid_events_array.length).dark_blue} <#{valid_events_array.length}>"
-puts
-puts " invalids:    #{('█'*invalid_events_array.length).red} <#{invalid_events_array.length}>"
-puts "#{" "*14}#{"-"*(valid_events_array.length + 10)}"
-index = 0
-str_index =" "*14
-(0..(valid_events_array.length + 10)).each do |i|
-  if (index == i)
-    str_index += (i.to_s+"#{" "*8}")
-    index+= 10
-  end
-end
-
-puts str_index
-puts "╚#{("═"*(valid_events_array.length + 31))}╝"
+#console graphic
+graphic_console_txt(
+                      valid_events_array.length,
+                      invalid_events_array.length,
+                      "valids",
+                      "invalids",
+                      true,
+                      ''
+                    )
