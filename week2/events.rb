@@ -48,18 +48,18 @@ def graphic_console_txt (q1,q2,cat1,cat2,op_print,txt_file)
     puts "\nGraphic:"
     puts "╔#{"═"*75}╗"
     puts
-    puts "#{" "*8}#{"▒".dark_blue*(0.5*pv).to_i} <#{q1}>"
-    puts "#{" "*8}#{"▒".dark_blue*(0.5*pv).to_i} <#{pv}%>"
+    puts "#{" "*8}#{"█".dark_blue*(0.5*pv).to_i} <#{q1}>"
+    puts "#{" "*8}#{"█".dark_blue*(0.5*pv).to_i} <#{pv}%>"
     puts
-    puts "#{" "*8}#{"▒".red*(0.5*pi).to_i} <#{q2}>"
-    puts "#{" "*8}#{"▒".red*(0.5*pi).to_i} <#{pi}%>"
+    puts "#{" "*8}#{"█".red*(0.5*pi).to_i} <#{q2}>"
+    puts "#{" "*8}#{"█".red*(0.5*pi).to_i} <#{pi}%>"
     puts
     puts "#{" "*8}├────#{"┼────"*9}┤"
     puts str_sc +"(%)"
     puts
-    puts "#{" "*8}#{"▒".dark_blue*1} #{cat1}"
+    puts "#{" "*8}#{"█".dark_blue*1} #{cat1}"
     puts
-    puts "#{" "*8}#{"▒".red*1} #{cat2}"
+    puts "#{" "*8}#{"█".red*1} #{cat2}"
     puts "╚#{"═"*75}╝"
     puts
 
@@ -86,16 +86,18 @@ def graphic_console_txt (q1,q2,cat1,cat2,op_print,txt_file)
   end
 end
 
-
-
 #read file
 line= []
 valid_events_array = []
 invalid_events_array = []
 num_line = 0
-
+puts 'PROGRAM TO READ AND VALIDATE DATES FROM A FILE'
+puts 'Enter the path and name to the file whit the dates'
+puts
+file_name = gets.chomp
+puts
 begin
-file = File.open("events.csv","r") do |f|
+file = File.open(file_name,"r") do |f|
   while line = f.gets
     num_line = num_line +1
     begin
@@ -113,10 +115,6 @@ file = File.open("events.csv","r") do |f|
     end
   end
 end
-rescue => e
-  puts "Error, #{e.message}"
-end
-
 #write valid dates to file
 begin
   valids = File.open("valids.csv", "w")
@@ -155,3 +153,9 @@ graphic_console_txt(
                       true,
                       ''
                     )
+puts
+puts "Files \"valids.csv\" and \"invalids.csv\" are created in the current folder."
+puts "Graphic also saved in \"valids.csv\""
+rescue => e
+  puts "Error, #{e.message}"
+end
