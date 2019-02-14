@@ -91,7 +91,7 @@ end
 begin
   invalids = File.open("invalids.csv", "w")
   invalid_events_array.each do |event|
-    invalids.puts "#{event.n_line},#{event.title},#{event.date}"
+    invalids.puts "#{event.n_line},#{event.title},#{event.date}" #line number,event title,date
   end
 rescue => e
   puts "Error, #{e.message}"
