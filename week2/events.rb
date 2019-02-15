@@ -11,6 +11,7 @@ class EventStr
     @n_line = n_line
     @valid = valid
   end
+
   def to_s
     n_line.to_s + "," + title.to_s + "," + date.strftime('%d/%m/%Y %H:%M:%S %z') + "," + valid.to_s
   end
@@ -30,6 +31,7 @@ end
 
 #graphic function
 def graphic_console_txt (q1,q2,cat1,cat2,op_print,txt_file)
+  #use more descriptive variable names.
   total = q1 + q2
   pv = (q1/total.to_f)*100
   pi = (q2/total.to_f)*100
@@ -44,7 +46,7 @@ def graphic_console_txt (q1,q2,cat1,cat2,op_print,txt_file)
     end
   end
 
-  if(op_print == true)  #console
+  if (op_print == true)  #console
     puts "\nGraphic:"
     puts "╔#{"═"*75}╗"
     puts
@@ -87,38 +89,35 @@ def graphic_console_txt (q1,q2,cat1,cat2,op_print,txt_file)
 end
 
 #read file
-line= []
 valid_events_array = []
 invalid_events_array = []
 num_line = 0
 puts 'PROGRAM TO READ AND VALIDATE DATES FROM A FILE'
-puts 'Enter the path and name to the file whit the dates'
+puts 'Enter the path and name to the file with the dates'
 puts
 file_name = gets.chomp
 puts
 begin
-file = File.open(file_name,"r") do |f|
-  while line = f.gets
-    num_line = num_line +1
+file = File.open(file_name,"r").each do |f|
+    num_line += 1
     begin
-      l=line.split(',')
+      line = f.split(',')
       #check date format
-      d  =  DateTime.strptime(l[1].slice(0..l[1].length-2)+" -06",'%d/%m/%Y %H:%M:%S %z')
+      date = DateTime.strptime(line[1]+" -06",'%d/%m/%Y %H:%M:%S %z')
       #change to EST, (UTC-5)
-      d = d.to_time.getlocal("-05:00")
-      event = EventStr.new(l[0], d , num_line, true)
+      date = date.to_time.getlocal("-05:00")
+      event = EventStr.new(line[0], date, num_line, true)
       valid_events_array << event # add to valid array
     rescue  => e
       puts "Error, invalid date format at line #{num_line}"
-      event = EventStr.new(l[0], l[1] , num_line, false)
+      event = EventStr.new(line[0], line[1] , num_line, false)
       invalid_events_array << event #add to invalid array
     end
-  end
 end
 #write valid dates to file
 begin
   valids = File.open("valids.csv", "w")
-  valid_events_array.sort_by{|e|  e.date }.each do |event|
+  valid_events_array.sort_by{ |e|  e.date }.each do |event|
     valids.puts "#{event.date.strftime("%d/%m/%Y %H:%M:%S %z")}"
   end
   #txt graphic
