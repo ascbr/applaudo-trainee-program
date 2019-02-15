@@ -8,7 +8,7 @@ Program's components.
 
 Functionality
 
-The program will ask for the path and name of a file, example: */home/user/Documents/events.csv*, but in the case that the file is in the same program's folder, the path is not required just the file's name, example: *events.csv*.
+- The program will ask for the path and name of a file, example: */home/user/Documents/events.csv*, but in the case that the file is in the same program's folder, the path is not required just the file's name, example: *events.csv*.
 
 Results
 
