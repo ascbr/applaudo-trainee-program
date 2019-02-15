@@ -7,6 +7,6 @@ Gem::Specification.new do |s|
   s.authors     = ["ascbr"]
   s.email       = 'adilio.scbr@gmail'
   s.files       = ["lib/histogram.rb"]
-  s.homepage    =   'https://github.com/ascbr/applaudo-trainee-program/tree/master/week1'
+  s.homepage    =   'https://github.com/ascbr/applaudo-trainee-program/tree/master/histogram'
   s.license       = 'MIT'
 end
