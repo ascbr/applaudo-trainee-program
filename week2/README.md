@@ -2,9 +2,9 @@
 
 Program's components.
 
-1- A Class to manage the events by their properties (title, date, original line number)
-2- A function to display in console and print to a file, a graphic made with ascii characters.
-3- A block of code to read the lines from the source csv file, evaluate the dates, create two arrays with valid and invalid events to later print both arrays in two csv files.
+1. A Class to manage the events by their properties (title, date, original line number).
+2. A function to display in console and print to a file, a graphic made with ascii characters.
+3. A block of code to read the lines from the source csv file, evaluate the dates, create two arrays with valid and invalid events to later print both arrays in two csv files.
 
 Functionality
 
