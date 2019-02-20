@@ -1,17 +1,19 @@
 # Class vehicle
 class Vehicle
-  attr_accessor :color,
+  attr_accessor :id,
+                :color,
                 :brand,
                 :price,
                 :wheels,
                 :type,
                 :extras
   def to_s
-    puts "Type: #{@type}"
-    puts "Color: #{@color}"
-    puts "Brand: #{@brand}"
-    puts "wheels: #{@wheels}"
-    puts "Price: #{@price}"
+    puts "\t#{@type} ID: #{@id}\n"
+    puts "\tFeautres:"
+    puts "\n\tColor: \t#{@color}"
+    puts "\tBrand: \t#{@brand}"
+    puts "\twheels:\t#{@wheels}"
+    puts "\tPrice: \t$ #{@price.round(2)}"
   end
 
   def add_extra(extra)
