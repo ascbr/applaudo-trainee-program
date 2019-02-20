@@ -78,4 +78,6 @@ class Store
       @vehicles << truck
     end
   end
+
+  add 
 end
