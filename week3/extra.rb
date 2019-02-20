@@ -7,6 +7,6 @@ class Extra
   end
 
   def to_s
-    puts "#{@name} (#{@price})"
+    puts "\t#{@name} ($ #{@price})"
   end
 end

@@ -9,7 +9,7 @@ class Vehicle
                 :extras
   def to_s
     puts "\t#{@type} ID: #{@id}\n"
-    puts "\tFeautres:"
+    puts "\tFeatures:"
     puts "\n\tColor: \t#{@color}"
     puts "\tBrand: \t#{@brand}"
     puts "\twheels:\t#{@wheels}"
@@ -25,5 +25,5 @@ class Vehicle
       @extra.delete
     end
   end
-  
+
 end

@@ -10,5 +10,8 @@ class Car <  Vehicle
     @color = color
     @price = price
   end
- 
+
+  private
+
+  
 end

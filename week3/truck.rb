@@ -14,4 +14,6 @@ class Truck < Vehicle
     @color = color
     @price = price
   end
+
+  
 end

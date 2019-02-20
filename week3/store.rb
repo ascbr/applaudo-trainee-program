@@ -51,9 +51,31 @@ class Store
   end
 
   def print_vehicles
+    puts 'AVAILABLE VEHICLES:'
+    puts '=========================================================='
     @vehicles.each do |e|
       puts e.to_s
       puts '=========================================================='
+    end
+  end
+
+  def print_extras
+    puts 'AVAILABLE EXTRAS:'
+    puts '=========================================================='
+    @extras.each do |e|
+      puts e.to_s
+    end
+  end
+
+  def add_vehicle(* args)
+    puts args.size
+    case args.size
+    when 3
+      car = Car.new(args[0], args[1], args[2])
+      @vehicles << car
+    when 4
+      truck = Truck.new(args[0], args[1], args[2], args[3])
+      @vehicles << truck
     end
   end
 end
