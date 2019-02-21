@@ -9,9 +9,7 @@ class Car <  Vehicle
     @brand = brand
     @color = color
     @price = price
+    @extras = []
   end
 
-  private
-
-  
 end

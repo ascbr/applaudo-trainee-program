@@ -79,5 +79,23 @@ class Store
     end
   end
 
-  add 
+  def select_vehicle(id)
+    found = @vehicles.select { |v| v.id == id }
+    found[0]
+  end
+
+  def remove_vehicle(vehicle_to_remove)
+    @vehicles.delete(vehicle_to_remove)
+  end
+
+  def add_extra_vehicle(extra, vehicle)
+    i = @vehicles.index(vehicle)
+    @vehicles[i].add_extra(extra)
+  end
+
+  def find_extra(name)
+    found = @extras.select { |e| e.name == name}
+    found[0]
+  end
+
 end

@@ -9,6 +9,8 @@ loop do
   puts "\t1. List of vehicles."
   puts "\t2. List of extras."
   puts "\t3. Add new vehicle to the Store."
+  puts "\t4. Remove a vehicle from the Store."
+  puts "\t5. Add an Extra to a vehicle."
   puts "\t   Or enter \"quit\" to exit."
   option = gets.chomp
 
@@ -24,7 +26,6 @@ loop do
     car_type = gets.chomp
     case car_type
     when '1'
-       
       print 'Enter the brand: '
       brand = gets.chomp
       print 'Enter the price: '
@@ -44,6 +45,44 @@ loop do
       store.add_vehicle(wheels.to_i, brand, price.to_f, color)
     else
       puts 'Invalid type'
+    end
+  when '4'
+    print 'Enter the id: '
+    id = gets.chomp
+    vehicle = store.select_vehicle(id)
+    if vehicle.nil?
+      puts 'Vehicle not found.'
+    else
+      puts '=================================================='
+      puts vehicle.to_s
+      print 'you sure you want to remove the Vehicle? '
+      confirm = gets.chomp
+      if confirm == 'y'
+        store.remove_vehicle(vehicle)
+        puts 'Removed from store.'
+      else
+        puts 'Remove operation canceled'
+      end
+    end
+  when '5'
+    puts 'Enter the id: '
+    id = gets.chomp
+    vehicle = store.select_vehicle(id)
+    if vehicle.nil?
+      puts 'Vehicle not found.'
+    else
+      puts '=================================================='
+      puts vehicle.to_s
+      store.print_extras
+      puts "Enter name to add exra to be added to #{vehicle.type} - #{vehicle.id} \nor \'r\' to return: "
+      extra_name = gets.chomp
+      extra = store.find_extra(extra_name)
+      if !extra.nil?
+        store.add_extra_vehicle(extra, vehicle)
+      else
+        puts 'Extra not found'
+      end
+      
     end
   when 'quit'
     puts 'Finishing Program.'
