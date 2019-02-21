@@ -5,41 +5,33 @@ require_relative 'extra'
 class Store
   attr_accessor :vehicles, :extras
   
-  def brands_array
-    @@ram_brand =['Mitubihshi', 'Toyota', 'Nissan', 'Ford', 'BMW'].sample
+  def self.brands_array
+    @ran_brand =['Mitubihshi', 'Toyota', 'Nissan', 'Ford', 'BMW'].sample
   end
 
-  def colors_array
-    @@ram_color =['black', 'white', 'blue', 'red', 'gray'].sample
+  def self.colors_array
+    @ran_color =['black', 'white', 'blue', 'red', 'gray'].sample
   end
 
-  def ram_price
+  def self.ran_price
     prng = Random.new
-    @@ram_price = prng.rand(5000.0..15000.0)
+    @ran_price = prng.rand(5000.0..15000.0)
   end
 
-  def ram_wheels_truck
+  def self.ran_wheels_truck
     prng = Random.new
-    @@ram_wheels = prng.rand(6..12)
+    @ran_wheels = prng.rand(6..12)
   end
 
   def initialize
     @vehicles = []
     @extras = []
     5.times do
-      brands_array
-      colors_array
-      ram_price
 
-      new_car = Car.new(@@ram_brand, @@ram_price, @@ram_color)
+      new_car = Car.new(self.class.brands_array, self.class.ran_price, self.class.colors_array)
       @vehicles << new_car
 
-      brands_array
-      colors_array
-      ram_price
-      ram_wheels_truck
-
-      new_truck = Truck.new(@@ram_wheels, @@ram_brand, @@ram_price, @@ram_color)
+      new_truck = Truck.new(self.class.ran_wheels_truck, self.class.brands_array, self.class.ran_price, self.class.colors_array)
       @vehicles << new_truck
 
     end
@@ -94,7 +86,7 @@ class Store
   end
 
   def find_extra(name)
-    found = @extras.select { |e| e.name == name}
+    found = @extras.select { |e| e.name == name }
     found[0]
   end
 

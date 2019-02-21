@@ -1,6 +1,7 @@
 require_relative 'store'
 
 store = Store.new
+
 loop do
   puts "----------------------------------------------------------\n"+
        'CAR STORE-MAIN MENU'+
@@ -11,6 +12,7 @@ loop do
   puts "\t3. Add new vehicle to the Store."
   puts "\t4. Remove a vehicle from the Store."
   puts "\t5. Add an Extra to a vehicle."
+  puts "\t6. Remove an Extra from a vehicle."
   puts "\t   Or enter \"quit\" to exit."
   option = gets.chomp
 
@@ -74,16 +76,34 @@ loop do
       puts '=================================================='
       puts vehicle.to_s
       store.print_extras
-      puts "Enter name to add exra to be added to #{vehicle.type} - #{vehicle.id} \nor \'r\' to return: "
+      puts "Enter name to add exra to be added to #{vehicle.type} - #{vehicle.id}"
       extra_name = gets.chomp
       extra = store.find_extra(extra_name)
       if !extra.nil?
-        store.add_extra_vehicle(extra, vehicle)
+       vehicle.add_extra(extra)
       else
         puts 'Extra not found'
       end
-      
     end
+  when '6'
+    puts 'Enter the id: '
+    id = gets.chomp
+    vehicle = store.select_vehicle(id)
+    if vehicle.nil?
+      puts 'Vehicle not found.'
+    else
+      puts vehicle.to_s
+      store.print_extras
+      puts "Enter name to add exra to be remove form: #{vehicle.type} - #{vehicle.id}"
+      extra_name = gets.chomp
+      extra = vehicle.find_extra_in_vehicle(extra_name)
+      if !extra.nil?
+        vehicle.remove_extra(extra)
+      else
+        puts 'Extra not found'
+      end
+    end
+
   when 'quit'
     puts 'Finishing Program.'
   else
