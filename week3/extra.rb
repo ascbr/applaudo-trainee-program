@@ -9,5 +9,4 @@ class Extra
   def to_s
     puts "\t#{@name} ($ #{@price})"
   end
-  
 end

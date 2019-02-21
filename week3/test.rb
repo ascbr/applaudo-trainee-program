@@ -13,6 +13,7 @@ loop do
   puts "\t4. Remove a vehicle from the Store."
   puts "\t5. Add an Extra to a vehicle."
   puts "\t6. Remove an Extra from a vehicle."
+  puts "\t7. Show a vehicle Quote."
   puts "\t   Or enter \"quit\" to exit."
   option = gets.chomp
 
@@ -93,7 +94,6 @@ loop do
       puts 'Vehicle not found.'
     else
       puts vehicle.to_s
-      store.print_extras
       puts "Enter name to add exra to be remove form: #{vehicle.type} - #{vehicle.id}"
       extra_name = gets.chomp
       extra = vehicle.find_extra_in_vehicle(extra_name)
@@ -102,6 +102,16 @@ loop do
       else
         puts 'Extra not found'
       end
+    end
+  when '7'
+    puts 'Enter the id: '
+    id = gets.chomp
+    vehicle = store.select_vehicle(id)
+    if vehicle.nil?
+      puts 'Vehicle not found.'
+    else
+      puts '=================================================='
+      puts vehicle.to_s
     end
 
   when 'quit'

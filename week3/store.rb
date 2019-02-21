@@ -80,11 +80,6 @@ class Store
     @vehicles.delete(vehicle_to_remove)
   end
 
-  def add_extra_vehicle(extra, vehicle)
-    i = @vehicles.index(vehicle)
-    @vehicles[i].add_extra(extra)
-  end
-
   def find_extra(name)
     found = @extras.select { |e| e.name == name }
     found[0]
