@@ -15,8 +15,8 @@ class Vehicle
     puts "\twheels:\t#{@wheels}"
     puts "\tPrice: \t$ #{@price.round(2)}"
     if @extras != nil
+      puts '--------------------------------------------------------'
       @extras.each do |e|
-        puts '--------------------------------------------------------'
         puts e.to_s
       end
       puts '--------------------------------------------------------'
