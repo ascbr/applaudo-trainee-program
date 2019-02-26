@@ -8,14 +8,14 @@ describe MagicBall do
         expect(MagicBall::ANSWERS).to include(magic_ball.ask('Is Minitest awesome?'))
       end
     end
-    context 'Check kind of answer' do
-      it 'is Array?' do
+    context 'test ask' do
+      it 'default is Array' do
         expect(MagicBall::ANSWERS).to be_a_kind_of(Array)
       end
     end
 
-    context 'Check answers array' do
-      it 'is empty?' do
+    context 'test ask' do
+      it 'default not empty' do
       expect(MagicBall::ANSWERS).not_to be_empty
       end
     end
