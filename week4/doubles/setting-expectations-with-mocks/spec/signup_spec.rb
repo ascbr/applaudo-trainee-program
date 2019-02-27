@@ -5,13 +5,19 @@ describe Signup do
   describe "#save" do
     it 'creates an account with one user' do
       account = double('account')
-      mock_account(account)
-      mock_user(account)
+      user = double('user')
 
-      signup = Signup.new(email: "user@example.com", account_name: "Example")
+      expect(Account).to receive(:create!)
+        .with(name: 'Example')
+        .and_return(account)
+        
+      expect(User).to receive(:create!)
+        .with(account: account, email: 'user@example.com')
+        .and_return(user)
+
+      signup = Signup.new(email: "user@example.com", account_name: 'Example')
       result = signup.save
-
-
+      expect(result).to be(true)
 
     end
   end
