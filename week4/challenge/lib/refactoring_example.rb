@@ -3,7 +3,7 @@
 # What to do?
 #
 # 1. Look at the code of the class CorrectAnswerBehavior
-# 2. Try to see what it does by running `ruby refactoring_example.rb` 
+# 2. Try to see what it does by running `ruby refactoring_example.rb`
 # 3. Record characterisation tests by running `ruby refactoring_example.rb --record`
 # 4. Make the code beautiful;)
 # 5. You are allowed to modify only the code between markers (REFACTORING START/REFACTORING END).
@@ -20,22 +20,21 @@
 #  ruby refactoring_example.rb [-t|--test|test]       - tests against 5000 recorded results of simulation.
 #  ruby refactoring_example.rb <ANY_NUMBER>           - shows result of simulation initialized with <ANY_NUMBER>.
 #  ruby refactoring_example.rb                        - shows result of random simulation.
-# 
+#
 # License: MIT (see at the end of the file)
 # This code is based on Trivia Game example used in Legacy Code Retreats
 # You can find it at https://github.com/jbrains/trivia
 
 # ------------------------------ REFACTORING START ------------------------------
+# class Correct
 class CorrectAnswerBehavior
-
   def was_correctly_answered
     if @in_penalty_box[@current_player]
       if @is_getting_out_of_penalty_box
-        puts "#{@players[@current_player]} got out of penalty box"
-        puts 'Answer was correct!!!!'
+        puts "#{@players[@current_player]} got out of penalty box\nAnswer was correct!!!!"
         @purses[@current_player] += 1
         puts "#{@players[@current_player]} now has #{@purses[@current_player]} Gold Coins."
-        winner = did_player_win()
+        winner = did_player_win
         @current_player += 1
         @current_player = 0 if @current_player == @players.length
         puts "Player is now #{@players[@current_player]}"
@@ -48,7 +47,7 @@ class CorrectAnswerBehavior
         true
       end
     else
-      puts "Answer was corrent!!!!"
+      puts 'Answer was corrent!!!!'
       @purses[@current_player] += 1
       puts "#{@players[@current_player]} now has #{@purses[@current_player]} Gold Coins."
       winner = did_player_win
@@ -58,21 +57,24 @@ class CorrectAnswerBehavior
       return winner
     end
   end
-private
+
+  private
+
   def did_player_win
-    !(@purses[@current_player] == 6)
+    purses[@current_player] != 6
   end
 
-# ------------------------------ REFACTORING END ------------------------------
+  # ------------------------------ REFACTORING END ------------------------------
 
-public
-  def initialize seed = nil
+  public
+
+  def initialize( seed = nil)
     srand(seed) if seed
     @players = %w[Alice Bob Cecil]
-    @purses = @players.map { rand(3) + 2 }
-    @in_penalty_box = @players.map { rand(2) == 0 }
+    @purses = @players.map { rand(2..4) }
+    @in_penalty_box = @players.map { rand(2).zero? }
     @current_player = rand(@players.count)
-    @is_getting_out_of_penalty_box = @in_penalty_box[@current_player] && rand(2) == 0
+    @is_getting_out_of_penalty_box = @in_penalty_box[@current_player] && rand(2).zero?
   end
 end
 
