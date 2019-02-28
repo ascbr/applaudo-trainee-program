@@ -16,7 +16,7 @@ describe MagicBall do
 
     context 'test ask' do
       it 'default not empty' do
-      expect(MagicBall::ANSWERS).not_to be_empty
+        expect(MagicBall::ANSWERS).not_to be_empty
       end
     end
 
