@@ -26,40 +26,38 @@
 # You can find it at https://github.com/jbrains/trivia
 
 # ------------------------------ REFACTORING START ------------------------------
+require_relative 'answer'
+
 # class Correct
 class CorrectAnswerBehavior
+  attr_accessor :answer, :players, :purses
+
   def was_correctly_answered
-    if @in_penalty_box[@current_player]
+    if @answer.in_penalty_box
       check_getting_out_penalty
     else
       puts 'Answer was corrent!!!!'
-      @purses[@current_player] += 1
-      puts "#{@players[@current_player]} now has #{@purses[@current_player]} Gold Coins."
-      winner = did_player_win
-      winner
+      incrase_purse
     end
-    @current_player += 1
-    @current_player = 0 if @current_player == @players.length
-    puts "Player is now #{@players[@current_player]}"
+    @answer.current_player += 1
+    @answer.current_player = 0 if @answer.current_player == @players.length
+    puts "Player is now #{@answer.current_player_name}"
+    true
   end
 
   def check_getting_out_penalty
-    if @is_getting_out_of_penalty_box
-      puts "#{@players[@current_player]} got out of penalty box\nAnswer was correct!!!!"
-      @purses[@current_player] += 1
-      puts "#{@players[@current_player]} now has #{@purses[@current_player]} Gold Coins."
-      winner = did_player_win
-      winner
+    if @answer.getting_out_penalty_box
+      puts "#{@answer.current_player_name} got out of penalty box\nAnswer was correct!!!!"
+      incrase_purse
     else
-      puts "#{@players[@current_player]} stays in penalty box"
-      true
+      puts "#{@answer.current_player_name} stays in penalty box"
     end
   end
 
   private
 
   def did_player_win
-    @purses[@current_player] != 6
+    @purses[@answer.current_player] != 6
   end
 
   # ------------------------------ REFACTORING END ------------------------------
@@ -70,10 +68,19 @@ class CorrectAnswerBehavior
     srand(seed) if seed
     @players = %w[Alice Bob Cecil]
     @purses = @players.map { rand(2..4) }
-    @in_penalty_box = @players.map { rand(2).zero? }
-    @current_player = rand(@players.count)
-    @is_getting_out_of_penalty_box = @in_penalty_box[@current_player] && rand(2).zero?
+    in_penalty_box = rand(2).zero?
+    current_player = rand(@players.count)
+    is_getting_out_of_penalty_box = in_penalty_box && rand(2).zero?
+
+    @answer = Answer.new(current_player, @purses[current_player], in_penalty_box, 
+      is_getting_out_of_penalty_box, @players[current_player])
   end
+
+  def incrase_purse
+    @answer.purse += 1
+    puts "#{@answer.current_player_name} now has #{@answer.purse} Gold Coins."
+  end
+
 end
 
 require 'fileutils'
