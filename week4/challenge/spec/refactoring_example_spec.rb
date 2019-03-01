@@ -23,7 +23,13 @@ describe 'CorrectAnswerBehavior' do
         behavior = CorrectAnswerBehavior.new
         expect([true, false]).to include(behavior.answer.in_penalty_box)
       end
+    end
+  end
+end
 
+describe 'CorrectAnswerBehavior' do
+  describe 'was_correctly_answered' do
+    context 'given a correct answer ' do
       it 'getting_out_penalty_box is a boolean' do
         behavior = CorrectAnswerBehavior.new
         expect([true, false]).to include(behavior.answer.getting_out_penalty_box)
