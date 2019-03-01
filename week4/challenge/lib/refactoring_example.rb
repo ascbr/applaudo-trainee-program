@@ -37,7 +37,7 @@ class CorrectAnswerBehavior
       check_getting_out_penalty
     else
       puts 'Answer was corrent!!!!'
-      incrase_purse
+      increase_purse
     end
     @answer.current_player += 1
     @answer.current_player = 0 if @answer.current_player == @players.length
@@ -45,24 +45,15 @@ class CorrectAnswerBehavior
     true
   end
 
-  def check_getting_out_penalty
-    if @answer.getting_out_penalty_box
-      puts "#{@answer.current_player_name} got out of penalty box\nAnswer was correct!!!!"
-      incrase_purse
-    else
-      puts "#{@answer.current_player_name} stays in penalty box"
-    end
-  end
-
-  private
-
-  def did_player_win
-    @purses[@answer.current_player] != 6
-  end
+  # not used method
+  # private
+  # def did_player_win
+  #  @answer.purse != 6
+  # end
 
   # ------------------------------ REFACTORING END ------------------------------
 
-  public
+  # public
 
   def initialize(seed = nil)
     srand(seed) if seed
@@ -72,15 +63,25 @@ class CorrectAnswerBehavior
     current_player = rand(@players.count)
     is_getting_out_of_penalty_box = in_penalty_box && rand(2).zero?
 
-    @answer = Answer.new(current_player, @purses[current_player], in_penalty_box, 
-      is_getting_out_of_penalty_box, @players[current_player])
+    @answer = Answer.new(current_player, @purses[current_player], in_penalty_box,
+                         is_getting_out_of_penalty_box, @players[current_player])
   end
 
-  def incrase_purse
+  # method to increase the purse of a player
+  def increase_purse
     @answer.purse += 1
     puts "#{@answer.current_player_name} now has #{@answer.purse} Gold Coins."
   end
+end
 
+# method to check if a player is getting out of the penalty box
+def check_getting_out_penalty
+  if @answer.getting_out_penalty_box
+    puts "#{@answer.current_player_name} got out of penalty box\nAnswer was correct!!!!"
+    increase_purse
+  else
+    puts "#{@answer.current_player_name} stays in penalty box"
+  end
 end
 
 require 'fileutils'
@@ -159,10 +160,9 @@ rescue RuntimeError => e
   puts e.message
 end
 
-# require 'test/unit/assertions'
-# include Test::Unit::Assertions
-
 def test_output
+  require 'test/unit/assertions'
+  include Test::Unit::Assertions
   SIMULATIONS_COUNT.times do |index|
     raise 'You need to record simulation results first!' unless FixtureHandler.fixture_exists?(index)
 
