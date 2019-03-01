@@ -1,11 +1,13 @@
 ## week 4
 
 **tree folder**
+```
 week4
 |- challenge
 |- doubles
 |- MagicBall_RSpec
 |- StringCalculatorMiniTest
+```
 
 Content:
 - Challenge: includes the refactoring challege for the week4.
